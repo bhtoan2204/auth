@@ -35,7 +35,7 @@ public class RestExceptionHandler {
         return ApiErrorResponse.from(HttpStatus.CONFLICT, ex.getMessage());
     }
 
-    @ExceptionHandler({InvalidCredentialsException.class, RefreshTokenInvalidException.class})
+    @ExceptionHandler({ InvalidCredentialsException.class, RefreshTokenInvalidException.class })
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     public ApiErrorResponse handleUnauthorized(RuntimeException ex) {
         return ApiErrorResponse.from(HttpStatus.UNAUTHORIZED, ex.getMessage());
