@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.marketplace.auth.presentation.http.response.BaseResponse;
+import com.marketplace.auth.presentation.http.v1.response.BaseResponse;
 
 import reactor.core.publisher.Mono;
 

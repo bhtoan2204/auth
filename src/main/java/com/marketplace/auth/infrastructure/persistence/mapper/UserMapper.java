@@ -54,12 +54,11 @@ public class UserMapper {
                 .mfaEnabled(domain.getMfaEnabled())
                 .mfaSecret(domain.getMfaSecret())
                 .build();
-        
+
         if (domain.getId() != null) {
             entity.setId(domain.getId());
         }
-        
+
         return entity;
     }
 }
-

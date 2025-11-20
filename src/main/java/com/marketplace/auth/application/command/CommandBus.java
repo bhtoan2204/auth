@@ -20,9 +20,9 @@ public class CommandBus {
     public <C extends Command<R>, R> Mono<R> execute(C command) {
         CommandHandler<C, R> handler = (CommandHandler<C, R>) handlers.get(command.getClass());
         if (handler == null) {
-            return Mono.error(new IllegalArgumentException("No handler registered for command: " + command.getClass().getName()));
+            return Mono.error(
+                    new IllegalArgumentException("No handler registered for command: " + command.getClass().getName()));
         }
         return Mono.fromCallable(() -> handler.handle(command));
     }
 }
-

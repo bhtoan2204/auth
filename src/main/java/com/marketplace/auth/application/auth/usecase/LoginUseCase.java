@@ -25,4 +25,3 @@ public class LoginUseCase {
                 result.expiresAt());
     }
 }
-

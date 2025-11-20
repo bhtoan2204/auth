@@ -11,7 +11,8 @@ public class PasswordVO {
       throw new IllegalArgumentException("Password must be at least 8 characters long");
     }
     if (!value.matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$")) {
-      throw new IllegalArgumentException("Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character");
+      throw new IllegalArgumentException(
+          "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character");
     }
     this.value = value;
   }

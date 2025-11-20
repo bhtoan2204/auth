@@ -1,4 +1,4 @@
-package com.marketplace.auth.presentation.http.response;
+package com.marketplace.auth.presentation.http.v1.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -32,4 +32,3 @@ public class BaseResponse<T> {
         return new BaseResponse<>(false, message, data, System.currentTimeMillis());
     }
 }
-

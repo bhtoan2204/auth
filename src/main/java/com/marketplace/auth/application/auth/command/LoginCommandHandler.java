@@ -18,4 +18,3 @@ public class LoginCommandHandler implements CommandHandler<LoginCommand, LoginCo
         return loginUseCase.execute(command);
     }
 }
-

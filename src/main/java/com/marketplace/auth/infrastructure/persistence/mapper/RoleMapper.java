@@ -29,12 +29,11 @@ public class RoleMapper {
         RoleEntity entity = RoleEntity.builder()
                 .name(domain.getName())
                 .build();
-        
+
         if (domain.getId() != null) {
             entity.setId(domain.getId());
         }
-        
+
         return entity;
     }
 }
-

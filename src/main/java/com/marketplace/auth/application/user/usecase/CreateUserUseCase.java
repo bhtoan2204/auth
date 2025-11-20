@@ -52,4 +52,3 @@ public class CreateUserUseCase {
                 aggregate.getUser().getEmail().getValue());
     }
 }
-

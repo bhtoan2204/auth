@@ -29,12 +29,11 @@ public class PermissionMapper {
         PermissionEntity entity = PermissionEntity.builder()
                 .name(domain.getName())
                 .build();
-        
+
         if (domain.getId() != null) {
             entity.setId(domain.getId());
         }
-        
+
         return entity;
     }
 }
-

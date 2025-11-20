@@ -1,8 +1,9 @@
 package com.marketplace.auth.infrastructure.persistence.mapper;
 
+import org.springframework.stereotype.Component;
+
 import com.marketplace.auth.domain.entity.Customer;
 import com.marketplace.auth.infrastructure.persistence.model.CustomerEntity;
-import org.springframework.stereotype.Component;
 
 @Component
 public class CustomerMapper {
@@ -35,12 +36,11 @@ public class CustomerMapper {
                 .phoneNumber(domain.getPhoneNumber())
                 .dateOfBirth(domain.getDateOfBirth())
                 .build();
-        
+
         if (domain.getId() != null) {
             entity.setId(domain.getId());
         }
-        
+
         return entity;
     }
 }
-

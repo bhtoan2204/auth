@@ -74,7 +74,7 @@ public class UserAggregate {
     }
 
     public boolean isLocked() {
-        return user != null && user.getLockedUntil() != null 
+        return user != null && user.getLockedUntil() != null
                 && user.getLockedUntil().isAfter(java.time.LocalDateTime.now());
     }
 

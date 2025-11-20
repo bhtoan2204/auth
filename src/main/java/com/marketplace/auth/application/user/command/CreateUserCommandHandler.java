@@ -18,4 +18,3 @@ public class CreateUserCommandHandler implements CommandHandler<CreateUserComman
         return createUserUseCase.execute(command);
     }
 }
-

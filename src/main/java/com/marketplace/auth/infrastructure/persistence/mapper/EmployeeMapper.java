@@ -1,8 +1,9 @@
 package com.marketplace.auth.infrastructure.persistence.mapper;
 
+import org.springframework.stereotype.Component;
+
 import com.marketplace.auth.domain.entity.Employee;
 import com.marketplace.auth.infrastructure.persistence.model.EmployeeEntity;
-import org.springframework.stereotype.Component;
 
 @Component
 public class EmployeeMapper {
@@ -35,12 +36,11 @@ public class EmployeeMapper {
                 .lastName(domain.getLastName())
                 .department(domain.getDepartment())
                 .build();
-        
+
         if (domain.getId() != null) {
             entity.setId(domain.getId());
         }
-        
+
         return entity;
     }
 }
-

@@ -1,8 +1,9 @@
 package com.marketplace.auth.infrastructure.persistence.repository;
 
+import org.springframework.stereotype.Component;
+
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor

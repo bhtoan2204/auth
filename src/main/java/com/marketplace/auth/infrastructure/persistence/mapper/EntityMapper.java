@@ -86,4 +86,3 @@ public class EntityMapper {
                 .collect(Collectors.toList());
     }
 }
-

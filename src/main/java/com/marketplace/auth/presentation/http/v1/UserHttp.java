@@ -1,4 +1,4 @@
-package com.marketplace.auth.presentation.http;
+package com.marketplace.auth.presentation.http.v1;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -7,16 +7,16 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.marketplace.auth.application.command.CommandBus;
 import com.marketplace.auth.application.user.command.CreateUserCommand;
-import com.marketplace.auth.presentation.http.request.CreateUserRequest;
-import com.marketplace.auth.presentation.http.response.BaseResponse;
-import com.marketplace.auth.presentation.http.response.CreateUserResponse;
+import com.marketplace.auth.presentation.http.v1.request.CreateUserRequest;
+import com.marketplace.auth.presentation.http.v1.response.BaseResponse;
+import com.marketplace.auth.presentation.http.v1.response.CreateUserResponse;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import reactor.core.publisher.Mono;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/v1/users")
 @RequiredArgsConstructor
 public class UserHttp {
 
@@ -29,7 +29,7 @@ public class UserHttp {
                 request.email(),
                 request.password(),
                 "customer");
-        
+
         return commandBus.execute(command)
                 .map(result -> {
                     CreateUserResponse response = new CreateUserResponse(

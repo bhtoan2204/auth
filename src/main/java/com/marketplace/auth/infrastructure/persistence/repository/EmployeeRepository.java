@@ -1,11 +1,12 @@
 package com.marketplace.auth.infrastructure.persistence.repository;
 
-import com.marketplace.auth.infrastructure.persistence.model.EmployeeEntity;
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
+import com.marketplace.auth.infrastructure.persistence.model.EmployeeEntity;
 
 @Repository
 public interface EmployeeRepository extends BaseRepository<EmployeeEntity, Integer> {
@@ -22,4 +23,3 @@ public interface EmployeeRepository extends BaseRepository<EmployeeEntity, Integ
 
     java.util.List<EmployeeEntity> findByDepartment(String department);
 }
-

@@ -1,9 +1,10 @@
 package com.marketplace.auth.infrastructure.persistence.repository;
 
-import com.marketplace.auth.infrastructure.persistence.model.RoleEntity;
+import java.util.Optional;
+
 import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
+import com.marketplace.auth.infrastructure.persistence.model.RoleEntity;
 
 @Repository
 public interface RoleRepository extends BaseRepository<RoleEntity, Integer> {
@@ -12,4 +13,3 @@ public interface RoleRepository extends BaseRepository<RoleEntity, Integer> {
 
     boolean existsByName(String name);
 }
-

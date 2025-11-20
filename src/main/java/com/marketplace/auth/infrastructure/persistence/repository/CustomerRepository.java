@@ -1,11 +1,12 @@
 package com.marketplace.auth.infrastructure.persistence.repository;
 
-import com.marketplace.auth.infrastructure.persistence.model.CustomerEntity;
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
+import com.marketplace.auth.infrastructure.persistence.model.CustomerEntity;
 
 @Repository
 public interface CustomerRepository extends BaseRepository<CustomerEntity, Integer> {
@@ -16,4 +17,3 @@ public interface CustomerRepository extends BaseRepository<CustomerEntity, Integ
     @Query("SELECT COUNT(c) > 0 FROM CustomerEntity c WHERE c.userAccount.id = :userId")
     boolean existsByUserId(@Param("userId") Integer userId);
 }
-

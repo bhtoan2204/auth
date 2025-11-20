@@ -9,8 +9,6 @@ public interface AuthService {
     record AuthResult(
             String accessToken,
             String refreshToken,
-            Instant expiresAt
-    ) {
+            Instant expiresAt) {
     }
 }
-

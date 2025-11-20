@@ -1,9 +1,10 @@
 package com.marketplace.auth.infrastructure.persistence.repository;
 
-import com.marketplace.auth.infrastructure.persistence.model.PermissionEntity;
+import java.util.Optional;
+
 import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
+import com.marketplace.auth.infrastructure.persistence.model.PermissionEntity;
 
 @Repository
 public interface PermissionRepository extends BaseRepository<PermissionEntity, Integer> {
@@ -12,4 +13,3 @@ public interface PermissionRepository extends BaseRepository<PermissionEntity, I
 
     boolean existsByName(String name);
 }
-
