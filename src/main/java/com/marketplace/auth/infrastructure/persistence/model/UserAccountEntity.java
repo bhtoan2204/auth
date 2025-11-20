@@ -14,8 +14,8 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@ToString(exclude = {"customer", "employee", "userRoles", "userKeys", "auditLogs"})
-@EqualsAndHashCode(callSuper = true, exclude = {"customer", "employee", "userRoles", "userKeys", "auditLogs"})
+@ToString(exclude = { "customer", "employee", "userRoles", "userKeys", "auditLogs" })
+@EqualsAndHashCode(callSuper = true, exclude = { "customer", "employee", "userRoles", "userKeys", "auditLogs" })
 public class UserAccountEntity extends BaseEntity {
 
     @Column(name = "username", unique = true, nullable = false, length = 255)
@@ -79,4 +79,3 @@ public class UserAccountEntity extends BaseEntity {
     @Builder.Default
     private Set<AuditLogEntity> auditLogs = new HashSet<>();
 }
-

@@ -16,8 +16,13 @@ import java.util.Map;
 @AllArgsConstructor
 @Builder
 @ToString(exclude = "userAccount")
-@EqualsAndHashCode(callSuper = true, exclude = "userAccount")
-public class AuditLogEntity extends BaseEntity {
+@EqualsAndHashCode(exclude = "userAccount")
+public class AuditLogEntity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private Integer id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
@@ -47,4 +52,3 @@ public class AuditLogEntity extends BaseEntity {
     @Builder.Default
     private LocalDateTime timestamp = LocalDateTime.now();
 }
-
