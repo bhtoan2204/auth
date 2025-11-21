@@ -10,7 +10,10 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Component
+@Slf4j
 public class JwtParser {
     public Map<String, Object> parseToken(String token, String secret) throws JWTVerificationException {
         try {
@@ -27,7 +30,7 @@ public class JwtParser {
                     "expiresAt", jwt.getExpiresAt(),
                     "claims", jwt.getClaims());
         } catch (JWTVerificationException e) {
-            System.out.println("Error: " + e.getMessage());
+            log.error("Error parsing token", e);
             throw new JWTVerificationException("Invalid token", e);
         }
     }

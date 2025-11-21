@@ -10,7 +10,7 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.marketplace.auth.application.auth.service.JwtAuthenticationService;
+import com.marketplace.auth.application.auth.service.JwtAuthenticationServiceImpl;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -22,7 +22,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
-    private final JwtAuthenticationService jwtAuthenticationService;
+    private final JwtAuthenticationServiceImpl jwtAuthenticationService;
     private final UserDetailsService userDetailsService;
 
     @Override

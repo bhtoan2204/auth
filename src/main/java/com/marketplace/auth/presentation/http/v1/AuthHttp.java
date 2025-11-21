@@ -13,28 +13,35 @@ import com.marketplace.auth.presentation.http.v1.response.LoginResponse;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Mono;
 
 @RestController
 @RequestMapping("/v1/auth")
 @RequiredArgsConstructor
+@Slf4j
 public class AuthHttp {
 
     private final CommandBus commandBus;
 
     @PostMapping("/login")
     public Mono<BaseResponse<LoginResponse>> login(@Valid @RequestBody LoginRequest request) {
-        LoginCommand command = new LoginCommand(
-                request.username(),
-                request.password());
+        try {
+            LoginCommand command = new LoginCommand(
+                    request.username(),
+                    request.password());
 
-        return commandBus.execute(command)
-                .map(result -> {
-                    LoginResponse response = new LoginResponse(
-                            result.accessToken(),
-                            result.refreshToken(),
-                            result.expiresAt());
-                    return BaseResponse.success(response);
-                });
+            return commandBus.execute(command)
+                    .map(result -> {
+                        LoginResponse response = new LoginResponse(
+                                result.accessToken(),
+                                result.refreshToken(),
+                                result.expiresAt());
+                        return BaseResponse.success(response);
+                    });
+        } catch (Exception e) {
+            log.error("Error logging in", e);
+            return Mono.just(BaseResponse.error("Failed to login"));
+        }
     }
 }

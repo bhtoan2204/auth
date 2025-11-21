@@ -47,7 +47,9 @@ public class WebSecurityConfig {
 
         .authorizeHttpRequests(auth -> auth
             .requestMatchers("/actuator/**", "/health", "/eureka/**").permitAll()
-            .requestMatchers(HttpMethod.POST, "/v1/auth/login", "/auth/v1/auth/login").permitAll()
+            .requestMatchers(HttpMethod.POST, "/v1/auth/login",
+                "/v1/users")
+            .permitAll()
             .anyRequest().authenticated())
 
         .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)

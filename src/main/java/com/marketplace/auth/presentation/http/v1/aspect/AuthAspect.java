@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import com.marketplace.auth.application.auth.service.JwtAuthenticationService;
+import com.marketplace.auth.application.auth.service.JwtAuthenticationServiceImpl;
 import com.marketplace.auth.presentation.http.v1.annotation.RequireAuth;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -18,7 +18,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class AuthAspect {
 
-    private final JwtAuthenticationService jwtAuthenticationService;
+    private final JwtAuthenticationServiceImpl jwtAuthenticationService;
 
     @Around("@annotation(requireAuth)")
     public Object authenticate(ProceedingJoinPoint joinPoint, RequireAuth requireAuth) throws Throwable {

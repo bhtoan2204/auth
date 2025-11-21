@@ -12,11 +12,13 @@ import com.marketplace.auth.presentation.http.v1.response.BaseResponse;
 import com.marketplace.auth.presentation.http.v1.response.ProfileResponse;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Mono;
 
 @RestController
 @RequestMapping("/v1/profile")
 @RequiredArgsConstructor
+@Slf4j
 public class ProfileHttp {
 
     private final CommandBus commandBus;
@@ -36,6 +38,7 @@ public class ProfileHttp {
                         return BaseResponse.success(response);
                     });
         } catch (Exception e) {
+            log.error("Error getting profile", e);
             return Mono.just(BaseResponse.error("Failed to get profile"));
         }
     }
