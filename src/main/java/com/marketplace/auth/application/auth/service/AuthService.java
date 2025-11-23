@@ -6,6 +6,8 @@ public interface AuthService {
 
     AuthResult authenticate(String username, String password);
 
+    AuthResult refreshToken(String refreshToken);
+
     record AuthResult(
             String accessToken,
             String refreshToken,
