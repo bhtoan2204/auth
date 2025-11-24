@@ -6,10 +6,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.marketplace.auth.application.auth.command.LoginCommand;
+import com.marketplace.auth.application.auth.command.RefreshTokenCommand;
 import com.marketplace.auth.application.command.CommandBus;
 import com.marketplace.auth.presentation.http.v1.request.LoginRequest;
+import com.marketplace.auth.presentation.http.v1.request.RefreshTokenRequest;
 import com.marketplace.auth.presentation.http.v1.response.BaseResponse;
 import com.marketplace.auth.presentation.http.v1.response.LoginResponse;
+import com.marketplace.auth.presentation.http.v1.response.RefreshTokenResponse;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -43,5 +46,19 @@ public class AuthHttp {
             log.error("Error logging in", e);
             return Mono.just(BaseResponse.error("Failed to login"));
         }
+    }
+
+    @PostMapping("/refresh")
+    public Mono<BaseResponse<RefreshTokenResponse>> refreshToken(@Valid @RequestBody RefreshTokenRequest request) {
+        RefreshTokenCommand command = new RefreshTokenCommand(request.refreshToken());
+
+        return commandBus.execute(command)
+                .map(result -> {
+                    RefreshTokenResponse response = new RefreshTokenResponse(
+                            result.accessToken(),
+                            result.refreshToken(),
+                            result.expiresAt());
+                    return BaseResponse.success(response);
+                });
     }
 }

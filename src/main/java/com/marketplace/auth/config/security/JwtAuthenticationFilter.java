@@ -30,6 +30,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             HttpServletResponse response,
             FilterChain filterChain) throws ServletException, IOException {
 
+        // Skip filter for public endpoints
+        String path = request.getRequestURI();
+        if (isPublicEndpoint(path)) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
         final String authHeader = request.getHeader("Authorization");
         final String jwt;
         final Integer userId;
@@ -60,5 +67,15 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         }
 
         filterChain.doFilter(request, response);
+    }
+
+    private boolean isPublicEndpoint(String path) {
+        // List of public endpoints that don't require authentication
+        return path.startsWith("/health") ||
+               path.startsWith("/actuator") ||
+               path.startsWith("/eureka") ||
+               path.equals("/v1/auth/login") ||
+               path.equals("/v1/auth/refresh") ||
+               path.equals("/v1/users");
     }
 }

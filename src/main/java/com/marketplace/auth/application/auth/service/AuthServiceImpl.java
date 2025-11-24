@@ -11,6 +11,7 @@ import com.marketplace.auth.application.exceptions.AccountBannedException;
 import com.marketplace.auth.application.exceptions.AccountInactiveException;
 import com.marketplace.auth.application.exceptions.AccountLockedException;
 import com.marketplace.auth.application.exceptions.AuthenticationException;
+import com.marketplace.auth.application.exceptions.InvalidTokenException;
 import com.marketplace.auth.application.user.service.UserService;
 import com.marketplace.auth.domain.aggregate.UserAggregate;
 import com.marketplace.auth.infrastructure.jwt.JwtProperties;
@@ -138,5 +139,58 @@ public class AuthServiceImpl implements AuthService {
             log.error("Error generating refresh token", e);
             throw new InternalServerErrorException("Failed to generate refresh token", e);
         }
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public AuthResult refreshToken(String refreshToken) {
+        // Verify and decode the refresh token
+        Map<String, Object> claims;
+        try {
+            Object tokenData = jwtProvider.verifyToken(refreshToken, jwtProperties.getJwt().getSecret());
+            if (!(tokenData instanceof Map)) {
+                throw new AuthenticationException();
+            }
+            claims = (Map<String, Object>) tokenData;
+        } catch (Exception e) {
+            throw new InvalidTokenException();
+        }
+
+        // Check if it's a refresh token
+        String tokenType = (String) claims.get("type");
+        if (!"refresh".equals(tokenType)) {
+            throw new InvalidTokenException();
+        }
+
+        // Extract user ID from token
+        String userIdStr = (String) claims.get("sub");
+        if (userIdStr == null) {
+            throw new InvalidTokenException();
+        }
+
+        Integer userId = Integer.valueOf(userIdStr);
+
+        // Find user by ID
+        UserAccountEntity userEntity = factoryRepository.getUserAccountRepository()
+                .findById(userId)
+                .orElseThrow(AuthenticationException::new);
+
+        // Check if user is still active
+        UserAggregate aggregate = userService.findById(userId);
+        if (aggregate == null) {
+            throw new AuthenticationException();
+        }
+
+        // Validate account status
+        validateAccountStatus(aggregate);
+
+        // Generate new tokens
+        String newAccessToken = generateAccessToken(userEntity);
+        String newRefreshToken = generateRefreshToken(userEntity);
+
+        return new AuthResult(
+                newAccessToken,
+                newRefreshToken,
+                Instant.now().plus(jwtProperties.getToken().getAccessTtl()));
     }
 }
