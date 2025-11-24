@@ -5,6 +5,8 @@ import org.springframework.context.annotation.Configuration;
 
 import com.marketplace.auth.application.auth.command.LoginCommand;
 import com.marketplace.auth.application.auth.command.LoginCommandHandler;
+import com.marketplace.auth.application.auth.command.RefreshTokenCommand;
+import com.marketplace.auth.application.auth.command.RefreshTokenCommandHandler;
 import com.marketplace.auth.application.command.CommandBus;
 import com.marketplace.auth.application.user.command.CreateUserCommand;
 import com.marketplace.auth.application.user.command.CreateUserCommandHandler;
@@ -20,6 +22,7 @@ public class CommandBusConfig {
     private final CreateUserCommandHandler createUserCommandHandler;
     private final LoginCommandHandler loginCommandHandler;
     private final GetProfileCommandHandler getProfileCommandHandler;
+    private final RefreshTokenCommandHandler refreshTokenCommandHandler;
 
     @Bean
     public CommandBus commandBus() {
@@ -27,6 +30,7 @@ public class CommandBusConfig {
         bus.register(CreateUserCommand.class, createUserCommandHandler);
         bus.register(LoginCommand.class, loginCommandHandler);
         bus.register(GetProfileCommand.class, getProfileCommandHandler);
+        bus.register(RefreshTokenCommand.class, refreshTokenCommandHandler);
         return bus;
     }
 }
