@@ -50,15 +50,24 @@ public class AuthHttp {
 
     @PostMapping("/refresh")
     public Mono<BaseResponse<RefreshTokenResponse>> refreshToken(@Valid @RequestBody RefreshTokenRequest request) {
-        RefreshTokenCommand command = new RefreshTokenCommand(request.refreshToken());
+        try {
+            RefreshTokenCommand command = new RefreshTokenCommand(request.refreshToken());
 
-        return commandBus.execute(command)
-                .map(result -> {
-                    RefreshTokenResponse response = new RefreshTokenResponse(
-                            result.accessToken(),
-                            result.refreshToken(),
-                            result.expiresAt());
-                    return BaseResponse.success(response);
-                });
+            return commandBus.execute(command)
+                    .map(result -> {
+                        RefreshTokenResponse response = new RefreshTokenResponse(
+                                result.accessToken(),
+                                result.refreshToken(),
+                                result.expiresAt());
+                        return BaseResponse.success(response);
+                    })
+                    .onErrorResume(e -> {
+                        log.error("Error refreshing token", e);
+                        return Mono.just(BaseResponse.error("Failed to refresh token: " + e.getMessage()));
+                    });
+        } catch (Exception e) {
+            log.error("Error refreshing token", e);
+            return Mono.just(BaseResponse.error("Failed to refresh token: " + e.getMessage()));
+        }
     }
 }

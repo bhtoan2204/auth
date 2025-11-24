@@ -145,25 +145,41 @@ public class AuthServiceImpl implements AuthService {
     @SuppressWarnings("unchecked")
     public AuthResult refreshToken(String refreshToken) {
         // Verify and decode the refresh token
-        Map<String, Object> claims;
+        Map<String, Object> tokenData;
         try {
-            Object tokenData = jwtProvider.verifyToken(refreshToken, jwtProperties.getJwt().getSecret());
-            if (!(tokenData instanceof Map)) {
+            Object verifiedData = jwtProvider.verifyToken(refreshToken, jwtProperties.getJwt().getSecret());
+            if (!(verifiedData instanceof Map)) {
                 throw new AuthenticationException();
             }
-            claims = (Map<String, Object>) tokenData;
+            tokenData = (Map<String, Object>) verifiedData;
         } catch (Exception e) {
+            log.error("Error verifying refresh token", e);
+            throw new InvalidTokenException();
+        }
+
+        // Extract claims from token data
+        Map<String, Object> jwtClaims = (Map<String, Object>) tokenData.get("claims");
+        if (jwtClaims == null) {
             throw new InvalidTokenException();
         }
 
         // Check if it's a refresh token
-        String tokenType = (String) claims.get("type");
+        Object typeClaim = jwtClaims.get("type");
+        if (typeClaim == null) {
+            throw new InvalidTokenException("Token type not found");
+        }
+        String tokenType;
+        if (typeClaim instanceof String) {
+            tokenType = (String) typeClaim;
+        } else {
+            tokenType = typeClaim.toString();
+        }
         if (!"refresh".equals(tokenType)) {
-            throw new InvalidTokenException();
+            throw new InvalidTokenException("Token is not a refresh token");
         }
 
-        // Extract user ID from token
-        String userIdStr = (String) claims.get("sub");
+        // Extract user ID from token subject
+        String userIdStr = (String) tokenData.get("subject");
         if (userIdStr == null) {
             throw new InvalidTokenException();
         }
