@@ -7,8 +7,7 @@ import java.time.Instant;
  * Contains new access and refresh tokens.
  */
 public record RefreshTokenResponse(
-        String accessToken,
-        String refreshToken,
-        Instant expiresAt
-) {
+                String accessToken,
+                String refreshToken,
+                Instant expiresAt) {
 }

@@ -7,10 +7,6 @@ import com.marketplace.auth.application.command.CommandHandler;
 
 import lombok.RequiredArgsConstructor;
 
-/**
- * Handler for RefreshTokenCommand.
- * Delegates the refresh token logic to the RefreshTokenUseCase.
- */
 @Component
 @RequiredArgsConstructor
 public class RefreshTokenCommandHandler implements CommandHandler<RefreshTokenCommand, RefreshTokenCommandResult> {
@@ -19,6 +15,6 @@ public class RefreshTokenCommandHandler implements CommandHandler<RefreshTokenCo
 
     @Override
     public RefreshTokenCommandResult handle(RefreshTokenCommand command) {
-        return refreshTokenUseCase.execute(command).block();
+        return refreshTokenUseCase.execute(command);
     }
 }

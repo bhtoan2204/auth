@@ -6,7 +6,5 @@ import jakarta.validation.constraints.NotBlank;
  * Request DTO for refreshing authentication tokens.
  */
 public record RefreshTokenRequest(
-        @NotBlank(message = "Refresh token is required")
-        String refreshToken
-) {
+                @NotBlank(message = "Refresh token is required") String refreshToken) {
 }

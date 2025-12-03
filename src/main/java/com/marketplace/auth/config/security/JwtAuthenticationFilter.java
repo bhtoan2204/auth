@@ -72,10 +72,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private boolean isPublicEndpoint(String path) {
         // List of public endpoints that don't require authentication
         return path.startsWith("/health") ||
-               path.startsWith("/actuator") ||
-               path.startsWith("/eureka") ||
-               path.equals("/v1/auth/login") ||
-               path.equals("/v1/auth/refresh") ||
-               path.equals("/v1/users");
+                path.startsWith("/actuator") ||
+                path.startsWith("/eureka") ||
+                path.equals("/v1/auth/login") ||
+                path.equals("/v1/auth/refresh") ||
+                path.equals("/v1/users");
     }
 }

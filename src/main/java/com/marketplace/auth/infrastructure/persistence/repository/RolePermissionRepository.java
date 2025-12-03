@@ -11,21 +11,22 @@ import com.marketplace.auth.infrastructure.persistence.model.RolePermissionEntit
 
 @Repository
 public interface RolePermissionRepository
-        extends BaseRepository<RolePermissionEntity, RolePermissionEntity.RolePermissionId> {
+                extends BaseRepository<RolePermissionEntity, RolePermissionEntity.RolePermissionId> {
 
-    @Query("SELECT rp FROM RolePermissionEntity rp WHERE rp.role.id = :roleId")
-    List<RolePermissionEntity> findByRoleId(@Param("roleId") Integer roleId);
+        @Query("SELECT rp FROM RolePermissionEntity rp WHERE rp.role.id = :roleId")
+        List<RolePermissionEntity> findByRoleId(@Param("roleId") Integer roleId);
 
-    @Query("SELECT rp FROM RolePermissionEntity rp WHERE rp.permission.id = :permissionId")
-    List<RolePermissionEntity> findByPermissionId(@Param("permissionId") Integer permissionId);
+        @Query("SELECT rp FROM RolePermissionEntity rp WHERE rp.permission.id = :permissionId")
+        List<RolePermissionEntity> findByPermissionId(@Param("permissionId") Integer permissionId);
 
-    @Query("SELECT rp FROM RolePermissionEntity rp WHERE rp.role.id = :roleId AND rp.permission.id = :permissionId")
-    Optional<RolePermissionEntity> findByRoleIdAndPermissionId(@Param("roleId") Integer roleId,
-            @Param("permissionId") Integer permissionId);
+        @Query("SELECT rp FROM RolePermissionEntity rp WHERE rp.role.id = :roleId AND rp.permission.id = :permissionId")
+        Optional<RolePermissionEntity> findByRoleIdAndPermissionId(@Param("roleId") Integer roleId,
+                        @Param("permissionId") Integer permissionId);
 
-    @Query("SELECT COUNT(rp) > 0 FROM RolePermissionEntity rp WHERE rp.role.id = :roleId AND rp.permission.id = :permissionId")
-    boolean existsByRoleIdAndPermissionId(@Param("roleId") Integer roleId, @Param("permissionId") Integer permissionId);
+        @Query("SELECT COUNT(rp) > 0 FROM RolePermissionEntity rp WHERE rp.role.id = :roleId AND rp.permission.id = :permissionId")
+        boolean existsByRoleIdAndPermissionId(@Param("roleId") Integer roleId,
+                        @Param("permissionId") Integer permissionId);
 
-    @Query("DELETE FROM RolePermissionEntity rp WHERE rp.role.id = :roleId")
-    void deleteByRoleId(@Param("roleId") Integer roleId);
+        @Query("DELETE FROM RolePermissionEntity rp WHERE rp.role.id = :roleId")
+        void deleteByRoleId(@Param("roleId") Integer roleId);
 }

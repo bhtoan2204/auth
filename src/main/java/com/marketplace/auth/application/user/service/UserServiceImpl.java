@@ -96,4 +96,10 @@ public class UserServiceImpl implements UserService {
     public boolean existsByEmail(String email) {
         return factoryRepository.getUserAccountRepository().existsByEmail(email);
     }
+
+    @Override
+    public void saveUser(User user) {
+        UserAccountEntity entity = entityMapper.toEntity(user);
+        factoryRepository.getUserAccountRepository().save(entity);
+    }
 }
